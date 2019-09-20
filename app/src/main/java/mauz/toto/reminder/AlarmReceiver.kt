@@ -19,12 +19,12 @@ class AlarmReceiver : BroadcastReceiver {
     override fun onReceive(p0: Context?, p1: Intent?) {
         Log.v(TOKEN, "start onReceive")
 
-        asd(p0, p1)
+        buildNotification(p0, p1)
 
         Log.v(TOKEN, "end onReceive")
     }
 
-    private fun asd(p0: Context?, p1: Intent?) {
+    private fun buildNotification(p0: Context?, p1: Intent?) {
         val notificationManager =
             p0?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)

@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
     companion object {
-        const val TOKEN = "AlarmReceiver"
+        const val TOKEN = "MainActivity"
     }
 
     // private var alarmReceiver: AlarmReceiver? = null
@@ -63,16 +63,9 @@ class MainActivity : AppCompatActivity() {
 
     fun goToNewReminder(view: View) {
         Log.v(TOKEN, "initialize new template instance")
-        val intent = Intent(this, NewTemplateActivity::class.java)
+        val intent = Intent(this, TemplateActivity::class.java)
         startActivity(intent)
     }
-
-    private fun newTemplate() {
-        Log.v(TOKEN, "initialize new template activity")
-        val intent = Intent(this, NewTemplateActivity::class.java)
-        startActivity(intent)
-    }
-
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
@@ -80,10 +73,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        Log.v(TOKEN, "menu opened")
         return when (item.itemId) {
             R.id.action_settings -> true
             R.id.action_new_template -> {
-                newTemplate()
+                Log.v(TOKEN, "initialize new template activity")
+                val intent = Intent(this, TemplateActivity::class.java)
+                startActivity(intent)
+                true
+            }
+            R.id.action_list_templates -> {
+                Log.v(TOKEN, "initialize maintain templates activity")
+                val intent = Intent(this, MaintainTemplatesActivity::class.java)
+                startActivity(intent)
                 true
             }
             else -> super.onOptionsItemSelected(item)

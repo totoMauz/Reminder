@@ -13,4 +13,10 @@
         android:orderInCategory="200"
         android:title="@string/action_new_template"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_list_templates"
+        android:icon="@drawable/list"
+        android:orderInCategory="300"
+        android:title="@string/action_list_templates"
+        app:showAsAction="ifRoom" />
 </menu>

@@ -42,6 +42,7 @@ class TemplateActivity : AppCompatActivity() {
                         getString(R.string.txtInvalidDurationInput),
                         Toast.LENGTH_SHORT
                     ).show()
+                    Log.d(TOKEN,  getString(R.string.txtInvalidDurationInput))
                     findViewById<TextView>(R.id.txtDuration).requestFocus()
                     return
                 }
@@ -52,6 +53,7 @@ class TemplateActivity : AppCompatActivity() {
                         getString(R.string.txtInvalidDurationInput),
                         Toast.LENGTH_SHORT
                     ).show()
+                    Log.d(TOKEN,  getString(R.string.txtInvalidDurationInput))
                     findViewById<TextView>(R.id.txtDuration).requestFocus()
                     return
                 }
@@ -62,10 +64,8 @@ class TemplateActivity : AppCompatActivity() {
                 duration = durationString.toLong() * MIN_TO_MILLI
             }
 
-            val reminder = Reminder(name, duration)
-
             val fos = openFileOutput(fileName, Context.MODE_PRIVATE + Context.MODE_APPEND)
-            fos.write(reminder.toString().toByteArray())
+            fos.write("$name;$duration\n".toByteArray())
             fos.close()
 
             Toast.makeText(
@@ -82,8 +82,7 @@ class TemplateActivity : AppCompatActivity() {
                 getString(R.string.txtSaveTemplateError),
                 Toast.LENGTH_SHORT
             ).show()
-
-            Log.v(TOKEN, getString(R.string.txtSaveTemplateError) + " " + e.printStackTrace())
+            Log.e(TOKEN, getString(R.string.txtSaveTemplateError) + " " + e.printStackTrace())
         }
     }
 }

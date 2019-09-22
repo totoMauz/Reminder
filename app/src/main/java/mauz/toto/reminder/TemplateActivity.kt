@@ -9,7 +9,24 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
-data class Reminder(val name: String, val duration: Long)
+data class Reminder(val name: String, val duration: Long) {
+    override fun toString(): String {
+        var hours: Long = 0
+        var minutes: Long = 0
+
+        var _dur = duration
+        if (_dur >= TemplateActivity.HOUR_TO_MILLI) {
+            hours = _dur % TemplateActivity.HOUR_TO_MILLI
+            _dur -= hours * TemplateActivity.HOUR_TO_MILLI
+        }
+
+        if(_dur >= TemplateActivity.HOUR_TO_MILLI) {
+            minutes = _dur % TemplateActivity.HOUR_TO_MILLI
+        }
+
+        return "$name\t${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}"
+    }
+}
 
 class TemplateActivity : AppCompatActivity() {
     companion object {
@@ -42,7 +59,7 @@ class TemplateActivity : AppCompatActivity() {
                         getString(R.string.txtInvalidDurationInput),
                         Toast.LENGTH_SHORT
                     ).show()
-                    Log.d(TOKEN,  getString(R.string.txtInvalidDurationInput))
+                    Log.d(TOKEN, getString(R.string.txtInvalidDurationInput))
                     findViewById<TextView>(R.id.txtDuration).requestFocus()
                     return
                 }
@@ -53,7 +70,7 @@ class TemplateActivity : AppCompatActivity() {
                         getString(R.string.txtInvalidDurationInput),
                         Toast.LENGTH_SHORT
                     ).show()
-                    Log.d(TOKEN,  getString(R.string.txtInvalidDurationInput))
+                    Log.d(TOKEN, getString(R.string.txtInvalidDurationInput))
                     findViewById<TextView>(R.id.txtDuration).requestFocus()
                     return
                 }

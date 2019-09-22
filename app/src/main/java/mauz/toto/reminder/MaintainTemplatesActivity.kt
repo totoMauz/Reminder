@@ -2,12 +2,17 @@ package mauz.toto.reminder
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import java.io.File
 
 class MaintainTemplatesActivity : AppCompatActivity() {
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var viewAdapter: RecyclerView.Adapter<*>
+    private lateinit var viewManager: RecyclerView.LayoutManager
+
     companion object {
         const val TOKEN = "MaintainTemplates"
         val ITEMS: MutableList<Reminder> = ArrayList()
@@ -17,6 +22,21 @@ class MaintainTemplatesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maintain_templates)
         loadTemplates()
+
+        viewManager = LinearLayoutManager(this)
+        viewAdapter = MyAdapter(ITEMS)
+
+        recyclerView = findViewById<RecyclerView>(R.id.recyclerView).apply {
+            // use this setting to improve performance if you know that changes
+            // in content do not change the layout size of the RecyclerView
+            setHasFixedSize(true)
+
+            // use a linear layout manager
+            layoutManager = viewManager
+
+            // specify an viewAdapter (see also next example)
+            adapter = viewAdapter
+        }
     }
 
     private fun loadTemplates() {
@@ -31,10 +51,6 @@ class MaintainTemplatesActivity : AppCompatActivity() {
                 val name = parts[0]
                 val duration = parts[1].toLong()
                 ITEMS.add(Reminder(name, duration))
-            }
-
-            val textView = findViewById<TextView>(R.id.lblContent).apply {
-                text = File(filesDir, TemplateActivity.fileName).readText()
             }
         } else {
             Toast.makeText(

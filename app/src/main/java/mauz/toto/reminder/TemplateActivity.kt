@@ -14,14 +14,14 @@ data class Reminder(val name: String, val duration: Long) {
         var hours: Long = 0
         var minutes: Long = 0
 
-        var _dur = duration
+        var _dur: Long = duration
         if (_dur >= TemplateActivity.HOUR_TO_MILLI) {
-            hours = _dur % TemplateActivity.HOUR_TO_MILLI
+            hours = (_dur / TemplateActivity.HOUR_TO_MILLI)
             _dur -= hours * TemplateActivity.HOUR_TO_MILLI
         }
 
-        if(_dur >= TemplateActivity.HOUR_TO_MILLI) {
-            minutes = _dur % TemplateActivity.HOUR_TO_MILLI
+        if(_dur >= TemplateActivity.MIN_TO_MILLI) {
+            minutes = (_dur / TemplateActivity.MIN_TO_MILLI)
         }
 
         return "$name\t${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}"
@@ -32,8 +32,8 @@ class TemplateActivity : AppCompatActivity() {
     companion object {
         const val fileName = "templates"
         const val TOKEN = "NewTemplate"
-        const val MIN_TO_MILLI = 60000
-        const val HOUR_TO_MILLI = 3600000
+        const val MIN_TO_MILLI: Long = 60000
+        const val HOUR_TO_MILLI: Long = 3600000
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -28,7 +28,6 @@ class TemplateActivity : AppCompatActivity() {
         Log.v(TOKEN, "Save templates")
 
         try {
-            val fos = openFileOutput(fileName, Context.MODE_PRIVATE)
 
             val name = findViewById<TextView>(R.id.txtName).text.toString()
             val durationString = findViewById<TextView>(R.id.txtDuration).text.toString()
@@ -64,6 +63,8 @@ class TemplateActivity : AppCompatActivity() {
             }
 
             val reminder = Reminder(name, duration)
+
+            val fos = openFileOutput(fileName, Context.MODE_PRIVATE + Context.MODE_APPEND)
             fos.write(reminder.toString().toByteArray())
             fos.close()
 

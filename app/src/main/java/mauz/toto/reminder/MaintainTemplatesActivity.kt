@@ -24,7 +24,7 @@ class MaintainTemplatesActivity : AppCompatActivity() {
         loadTemplates()
 
         viewManager = LinearLayoutManager(this)
-        viewAdapter = MyAdapter(ITEMS)
+        viewAdapter = ReminderAdapter(ITEMS)
 
         recyclerView = findViewById<RecyclerView>(R.id.recyclerView).apply {
             // use this setting to improve performance if you know that changes

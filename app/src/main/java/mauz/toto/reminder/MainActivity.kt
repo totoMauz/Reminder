@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         val formatter = SimpleDateFormat("HH:mm:ss")
 
         val calendar: Calendar = Calendar.getInstance()
-        textView.text = formatter.format(calendar.timeInMillis)
+        textViewName.text = formatter.format(calendar.timeInMillis)
 
         val intent = Intent(this.applicationContext, AlarmReceiver::class.java)
         val alarmIntent =

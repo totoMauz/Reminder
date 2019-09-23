@@ -2,6 +2,10 @@ package mauz.toto.reminder
 
 data class Reminder(val name: String, val duration: Long) {
     override fun toString(): String {
+        return "$name\t${getDuration()}"
+    }
+
+    fun getDuration(): String {
         var hours: Long = 0
         var minutes: Long = 0
 
@@ -15,6 +19,6 @@ data class Reminder(val name: String, val duration: Long) {
             minutes = (_dur / TemplateActivity.MIN_TO_MILLI)
         }
 
-        return "$name\t${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}"
+        return "${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}"
     }
 }

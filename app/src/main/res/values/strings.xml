@@ -5,8 +5,9 @@
     <string name="action_list_templates">List Reminders</string>
     <string name="txt_duration">Duration</string>
     <string name="txt_reminder_name">Name</string>
-    <string name="txtSaveTemplateError">Couldn\'t save template</string>
-    <string name="txtSaveTemplateSuccess">Template saved succesfully</string>
-    <string name="txtLoadTemplateError">Couldn\'t load templates</string>
-    <string name="txtInvalidDurationInput">Invalid duration input</string>
+    <string name="msgSaveTemplateError">Couldn\'t save template</string>
+    <string name="msgSaveTemplateSuccess">Template saved successfully</string>
+    <string name="msgLoadTemplateError">Couldn\'t load templates</string>
+    <string name="msgInvalidDurationInput">Invalid duration input</string>
+    <string name="msgInvalidNameInput">Invalid name input</string>
 </resources>

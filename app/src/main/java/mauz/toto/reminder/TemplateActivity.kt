@@ -43,15 +43,26 @@ class TemplateActivity : AppCompatActivity() {
         Log.v(TOKEN, "Save templates")
 
         val name = findViewById<TextView>(R.id.txtName).text.toString()
-        val duration = transformDuration()
-
-        if (duration < 0) {
+        if(name.isBlank()) {
             Toast.makeText(
                 this.applicationContext,
-                getString(R.string.txtInvalidDurationInput),
+                getString(R.string.msgInvalidNameInput),
                 Toast.LENGTH_SHORT
             ).show()
-            Log.d(TOKEN, getString(R.string.txtInvalidDurationInput))
+            Log.d(TOKEN, getString(R.string.msgInvalidNameInput))
+
+            findViewById<TextView>(R.id.txtName).requestFocus()
+            return
+        }
+
+        val duration = transformDuration()
+        if (duration <= 0) {
+            Toast.makeText(
+                this.applicationContext,
+                getString(R.string.msgInvalidDurationInput),
+                Toast.LENGTH_SHORT
+            ).show()
+            Log.d(TOKEN, getString(R.string.msgInvalidDurationInput))
 
             findViewById<TextView>(R.id.txtDuration).requestFocus()
             return
@@ -64,16 +75,17 @@ class TemplateActivity : AppCompatActivity() {
         } catch (e: Exception) {
             Toast.makeText(
                 this.applicationContext,
-                getString(R.string.txtSaveTemplateError),
+                getString(R.string.msgSaveTemplateError),
                 Toast.LENGTH_SHORT
             ).show()
-            Log.e(TOKEN, getString(R.string.txtSaveTemplateError) + " " + e.printStackTrace())
+            Log.e(TOKEN, getString(R.string.msgSaveTemplateError) + " " + e.printStackTrace())
         }
-        
+
         Toast.makeText(
             this.applicationContext,
-            getString(R.string.txtSaveTemplateSuccess),
+            getString(R.string.msgSaveTemplateSuccess),
             Toast.LENGTH_SHORT
         ).show()
+        this.finish()
     }
 }

@@ -55,10 +55,10 @@ class MaintainTemplatesActivity : AppCompatActivity() {
         } else {
             Toast.makeText(
                 this.applicationContext,
-                getString(R.string.txtLoadTemplateError),
+                getString(R.string.msgLoadTemplateError),
                 Toast.LENGTH_SHORT
             ).show()
-            Log.e(TOKEN, getString(R.string.txtLoadTemplateError))
+            Log.e(TOKEN, getString(R.string.msgLoadTemplateError))
         }
     }
 }

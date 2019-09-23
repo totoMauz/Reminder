@@ -2,7 +2,6 @@ package mauz.toto.reminder
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -53,12 +52,7 @@ class MaintainTemplatesActivity : AppCompatActivity() {
                 ITEMS.add(Reminder(name, duration))
             }
         } else {
-            Toast.makeText(
-                this.applicationContext,
-                getString(R.string.msgLoadTemplateError),
-                Toast.LENGTH_SHORT
-            ).show()
-            Log.e(TOKEN, getString(R.string.msgLoadTemplateError))
+            err(TOKEN, this.applicationContext, getString(R.string.msgLoadTemplateError))
         }
     }
 }

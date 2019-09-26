@@ -1,7 +1,9 @@
 package mauz.toto.reminder
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +17,12 @@ class MaintainTemplatesActivity : AppCompatActivity() {
     companion object {
         const val TOKEN = "MaintainTemplates"
         val ITEMS: MutableList<Reminder> = ArrayList()
+    }
+
+    fun goToNewReminder(view: View) {
+        Log.v(TOKEN, "initialize new template instance")
+        val intent = Intent(this, TemplateActivity::class.java)
+        startActivity(intent)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,6 +52,7 @@ class MaintainTemplatesActivity : AppCompatActivity() {
         val templates = File(filesDir, TemplateActivity.fileName)
 
         if (templates.isFile && templates.canRead()) {
+            ITEMS.clear()
             val lines = File(filesDir, TemplateActivity.fileName).readLines()
             for (line in lines) {
                 val parts = line.split(";")
@@ -51,6 +60,8 @@ class MaintainTemplatesActivity : AppCompatActivity() {
                 val duration = parts[1].toLong()
                 ITEMS.add(Reminder(name, duration))
             }
+            if(::viewAdapter.isInitialized)
+                viewAdapter.notifyDataSetChanged()
         } else {
             err(TOKEN, this.applicationContext, getString(R.string.msgLoadTemplateError))
         }

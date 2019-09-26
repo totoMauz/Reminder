@@ -6,6 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".MaintainTemplatesActivity">
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnNewTemplate"
+        android:layout_width="wrap_content"
+        android:layout_height="56dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="goToNewReminder"
+        app:layout_constraintBottom_toBottomOf="@+id/recyclerView"
+        app:layout_constraintEnd_toEndOf="@+id/recyclerView"
+        app:srcCompat="@android:drawable/ic_menu_add" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"

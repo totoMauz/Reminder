@@ -61,12 +61,6 @@ class MainActivity : AppCompatActivity() {
         */
     }
 
-    fun goToNewReminder(view: View) {
-        Log.v(TOKEN, "initialize new template instance")
-        val intent = Intent(this, TemplateActivity::class.java)
-        startActivity(intent)
-    }
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         return true

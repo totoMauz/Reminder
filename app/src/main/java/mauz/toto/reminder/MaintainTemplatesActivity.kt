@@ -25,6 +25,11 @@ class MaintainTemplatesActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    override fun onResume() {
+        loadTemplates()
+        super.onResume()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maintain_templates)

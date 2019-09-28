@@ -53,9 +53,8 @@ class MaintainTemplatesActivity : AppCompatActivity() {
     }
 
     private fun triggerAlarm(reminder: Reminder) {
-        Log.v(TOKEN, "instantiate $reminder.name")
-
-        val intent = Intent(this.applicationContext, AlarmReceiver::class.java)
+        Log.v(TOKEN, "instantiate ${reminder.name}")
+        makeToast(this.applicationContext, "Started ${reminder.name}")
         val alarmIntent =
             PendingIntent.getBroadcast(
                 this.applicationContext,

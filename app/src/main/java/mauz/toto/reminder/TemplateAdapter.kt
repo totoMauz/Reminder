@@ -10,14 +10,11 @@ class TemplateAdapter(private val items: List<Reminder>) :
     RecyclerView.Adapter<TemplateAdapter.MyViewHolder>() {
     var onItemClick: ((Reminder) -> Unit)? = null
 
-    inner class MyViewHolder : RecyclerView.ViewHolder {
-        val textViewName: TextView
-        val textViewDuration: TextView
+    inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val textViewName: TextView = view.findViewById(R.id.lblTemplateName)
+        val textViewDuration: TextView = view.findViewById(R.id.lblTemplateDuration)
 
-        constructor(view: View) : super(view) {
-            textViewName = view.findViewById(R.id.lblTemplateName)
-            textViewDuration = view.findViewById(R.id.lblTemplateDuration)
-
+        init {
             view.setOnClickListener {
                 onItemClick?.invoke(items[adapterPosition])
             }

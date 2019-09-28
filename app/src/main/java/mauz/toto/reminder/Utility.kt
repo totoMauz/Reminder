@@ -22,7 +22,7 @@ fun dbg(token: String, applicationContext: Context, msg: String) {
     Log.d(token, msg)
 }
 
-private fun makeToast(applicationContext: Context, msg: String) {
+fun makeToast(applicationContext: Context, msg: String) {
     Toast.makeText(
         applicationContext,
         msg,

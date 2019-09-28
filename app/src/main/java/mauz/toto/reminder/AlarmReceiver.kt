@@ -7,30 +7,35 @@ import android.content.Intent
 import android.media.RingtoneManager
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import mauz.toto.reminder.MaintainTemplatesActivity.Companion.REMINDER_EXTRA
 
 
-class AlarmReceiver : BroadcastReceiver {
+class AlarmReceiver : BroadcastReceiver() {
     companion object {
         const val TOKEN = "AlarmReceiver"
     }
 
-    constructor() : super()
-
-    override fun onReceive(p0: Context?, p1: Intent?) {
-        buildNotification(p0, p1)
+    override fun onReceive(context: Context?, intent: Intent?) {
+        buildNotification(context, intent)
     }
 
-    private fun buildNotification(p0: Context?, p1: Intent?) {
+    private fun buildNotification(context: Context?, intent: Intent?) {
         Log.v(TOKEN, "build notification")
 
         val notificationManager =
-            p0?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
 
-        val mBuilder = NotificationCompat.Builder(p0, "intent group")
+        var title = context.getString(R.string.app_name)
+        if (intent != null) {
+            val reminder = intent.getParcelableExtra<Reminder>(REMINDER_EXTRA);
+            title = reminder.name
+        }
+
+        val mBuilder = NotificationCompat.Builder(context, "intent group")
             .setSmallIcon(R.drawable.ic_launcher_background)
-            .setContentTitle("intent group")
-            .setContentText("Some message if defined")
+            .setContentTitle(title)
+            .setContentText(context.getString(R.string.msgNotificationText))
             .setSound(soundUri)
 
         notificationManager.notify(0, mBuilder.build())

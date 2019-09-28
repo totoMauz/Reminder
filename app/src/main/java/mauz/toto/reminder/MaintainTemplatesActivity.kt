@@ -1,5 +1,7 @@
 package mauz.toto.reminder
 
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import java.io.File
+import java.util.*
+import kotlin.collections.ArrayList
 
 class MaintainTemplatesActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
@@ -16,6 +20,7 @@ class MaintainTemplatesActivity : AppCompatActivity() {
 
     companion object {
         const val TOKEN = "MaintainTemplates"
+        const val REMINDER_EXTRA = "EXTRA_REMINDER"
         val ITEMS: MutableList<Reminder> = ArrayList()
     }
 
@@ -37,18 +42,35 @@ class MaintainTemplatesActivity : AppCompatActivity() {
 
         viewManager = LinearLayoutManager(this)
         viewAdapter = ReminderAdapter(ITEMS)
-
+        (viewAdapter as ReminderAdapter).onItemClick = { reminder: Reminder ->
+            triggerAlarm(reminder)
+        }
         recyclerView = findViewById<RecyclerView>(R.id.recyclerView).apply {
-            // use this setting to improve performance if you know that changes
-            // in content do not change the layout size of the RecyclerView
             setHasFixedSize(true)
-
-            // use a linear layout manager
             layoutManager = viewManager
-
-            // specify an viewAdapter (see also next example)
             adapter = viewAdapter
         }
+    }
+
+    private fun triggerAlarm(reminder: Reminder) {
+        Log.v(TOKEN, "instantiate $reminder.name")
+
+        val intent = Intent(this.applicationContext, AlarmReceiver::class.java)
+        val alarmIntent =
+            PendingIntent.getBroadcast(
+                this.applicationContext,
+                0,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT
+            )
+        intent.putExtra(REMINDER_EXTRA, reminder)
+
+        val alarmManager = this.getSystemService(ALARM_SERVICE) as AlarmManager
+
+        val calendar: Calendar = Calendar.getInstance()
+        calendar.add(Calendar.MINUTE, reminder.duration)
+
+        alarmManager.set(AlarmManager.RTC, calendar.timeInMillis, alarmIntent)
     }
 
     private fun loadTemplates() {
@@ -62,10 +84,10 @@ class MaintainTemplatesActivity : AppCompatActivity() {
             for (line in lines) {
                 val parts = line.split(";")
                 val name = parts[0]
-                val duration = parts[1].toLong()
+                val duration = parts[1].toInt()
                 ITEMS.add(Reminder(name, duration))
             }
-            if(::viewAdapter.isInitialized)
+            if (::viewAdapter.isInitialized)
                 viewAdapter.notifyDataSetChanged()
         } else {
             err(TOKEN, this.applicationContext, getString(R.string.msgLoadTemplateError))

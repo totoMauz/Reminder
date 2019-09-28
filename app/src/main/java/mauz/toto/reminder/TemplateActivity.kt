@@ -12,8 +12,7 @@ class TemplateActivity : AppCompatActivity() {
     companion object {
         const val fileName = "templates"
         const val TOKEN = "NewTemplate"
-        const val MIN_TO_MILLI: Long = 60000
-        const val HOUR_TO_MILLI: Long = 3600000
+        const val HOUR_TO_MINUTE = 60
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,7 +20,7 @@ class TemplateActivity : AppCompatActivity() {
         setContentView(R.layout.activity_new_template)
     }
 
-    private fun transformDuration(): Long {
+    private fun transformDuration(): Int {
         val durationString = findViewById<TextView>(R.id.txtDuration).text.toString()
 
         if (durationString.contains(':')) {
@@ -34,9 +33,9 @@ class TemplateActivity : AppCompatActivity() {
                 return -1
             }
 
-            return (durationParts[0].toLong() * HOUR_TO_MILLI) + (durationParts[1].toLong() * MIN_TO_MILLI)
+            return (durationParts[0].toInt() * HOUR_TO_MINUTE) + (durationParts[1].toInt())
         }
-        return durationString.toLong() * MIN_TO_MILLI
+        return durationString.toInt()
     }
 
     fun saveTemplate(view: View) {

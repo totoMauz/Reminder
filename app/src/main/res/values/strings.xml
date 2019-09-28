@@ -10,4 +10,5 @@
     <string name="msgLoadTemplateError">Couldn\'t load templates</string>
     <string name="msgInvalidDurationInput">Invalid duration input</string>
     <string name="msgInvalidNameInput">Invalid name input</string>
+    <string name="msgNotificationText">The time has come</string>
 </resources>

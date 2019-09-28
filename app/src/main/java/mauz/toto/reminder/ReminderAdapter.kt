@@ -8,14 +8,19 @@ import androidx.recyclerview.widget.RecyclerView
 
 class ReminderAdapter(private val items: List<Reminder>) :
     RecyclerView.Adapter<ReminderAdapter.MyViewHolder>() {
+    var onItemClick: ((Reminder) -> Unit)? = null
 
-    class MyViewHolder : RecyclerView.ViewHolder {
+    inner class MyViewHolder : RecyclerView.ViewHolder {
         val textViewName: TextView
         val textViewDuration: TextView
 
         constructor(view: View) : super(view) {
             textViewName = view.findViewById(R.id.lblReminderName)
             textViewDuration = view.findViewById(R.id.lblReminderDuration)
+
+            view.setOnClickListener {
+                onItemClick?.invoke(items[adapterPosition])
+            }
         }
     }
 

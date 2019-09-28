@@ -41,8 +41,8 @@ class MaintainTemplatesActivity : AppCompatActivity() {
         loadTemplates()
 
         viewManager = LinearLayoutManager(this)
-        viewAdapter = ReminderAdapter(ITEMS)
-        (viewAdapter as ReminderAdapter).onItemClick = { reminder: Reminder ->
+        viewAdapter = TemplateAdapter(ITEMS)
+        (viewAdapter as TemplateAdapter).onItemClick = { reminder: Reminder ->
             triggerAlarm(reminder)
         }
         recyclerView = findViewById<RecyclerView>(R.id.recyclerView).apply {

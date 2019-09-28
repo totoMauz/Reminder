@@ -7,21 +7,21 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/lblReminderName"
+        android:id="@+id/lblTemplateName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-        app:layout_constraintEnd_toStartOf="@+id/lblReminderDuration"
+        app:layout_constraintEnd_toStartOf="@+id/lblTemplateDuration"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
     </TextView>
 
     <TextView
-        android:id="@+id/lblReminderDuration"
+        android:id="@+id/lblTemplateDuration"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -32,13 +32,13 @@
         tools:text="HH:mm" />
 
     <View
-        android:id="@+id/divider2"
+        android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="8dp"
         android:background="?android:attr/listDivider"
-        app:layout_constraintBottom_toBottomOf="@+id/lblReminderName"
-        app:layout_constraintTop_toBottomOf="@+id/lblReminderName" />
+        app:layout_constraintBottom_toBottomOf="@+id/lblTemplateName"
+        app:layout_constraintTop_toBottomOf="@+id/lblTemplateName" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

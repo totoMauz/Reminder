@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class ReminderAdapter(private val items: List<Reminder>) :
-    RecyclerView.Adapter<ReminderAdapter.MyViewHolder>() {
+class TemplateAdapter(private val items: List<Reminder>) :
+    RecyclerView.Adapter<TemplateAdapter.MyViewHolder>() {
     var onItemClick: ((Reminder) -> Unit)? = null
 
     inner class MyViewHolder : RecyclerView.ViewHolder {
@@ -15,8 +15,8 @@ class ReminderAdapter(private val items: List<Reminder>) :
         val textViewDuration: TextView
 
         constructor(view: View) : super(view) {
-            textViewName = view.findViewById(R.id.lblReminderName)
-            textViewDuration = view.findViewById(R.id.lblReminderDuration)
+            textViewName = view.findViewById(R.id.lblTemplateName)
+            textViewDuration = view.findViewById(R.id.lblTemplateDuration)
 
             view.setOnClickListener {
                 onItemClick?.invoke(items[adapterPosition])
@@ -29,7 +29,7 @@ class ReminderAdapter(private val items: List<Reminder>) :
         viewType: Int
     ): MyViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.reminder_view, parent, false) as View
+            .inflate(R.layout.template_view, parent, false) as View
 
         return MyViewHolder(view)
     }

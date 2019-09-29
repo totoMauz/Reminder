@@ -9,6 +9,8 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import mauz.toto.reminder.MaintainReminderActivity.Companion.INTENTS
+import mauz.toto.reminder.MaintainReminderActivity.Companion.TIME
 import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
@@ -22,7 +24,6 @@ class MaintainTemplatesActivity : AppCompatActivity() {
         const val TOKEN = "MaintainTemplates"
         const val REMINDER_EXTRA = "EXTRA_REMINDER"
         val ITEMS: MutableList<Reminder> = ArrayList()
-        val INTENTS: MutableList<PendingIntent> = ArrayList()
         val ID = generateSequence(0) { it + 1 }
     }
 
@@ -47,7 +48,7 @@ class MaintainTemplatesActivity : AppCompatActivity() {
         (viewAdapter as TemplateAdapter).onItemClick = { reminder: Reminder ->
             triggerAlarm(reminder)
         }
-        recyclerView = findViewById<RecyclerView>(R.id.recyclerView).apply {
+        recyclerView = findViewById<RecyclerView>(R.id.rvTemplates).apply {
             setHasFixedSize(true)
             layoutManager = viewManager
             adapter = viewAdapter
@@ -60,8 +61,7 @@ class MaintainTemplatesActivity : AppCompatActivity() {
 
         val intent = Intent(this.applicationContext, AlarmReceiver::class.java)
         intent.putExtra(REMINDER_EXTRA, reminder)
-
-        val alarmManager = this.getSystemService(ALARM_SERVICE) as AlarmManager
+        intent.putExtra("asd", reminder.name)
 
         val calendar: Calendar = Calendar.getInstance()
         calendar.add(Calendar.MINUTE, reminder.duration)
@@ -73,8 +73,11 @@ class MaintainTemplatesActivity : AppCompatActivity() {
                 intent,
                 PendingIntent.FLAG_UPDATE_CURRENT
             )
+
+        val alarmManager = this.getSystemService(ALARM_SERVICE) as AlarmManager
         alarmManager.set(AlarmManager.RTC, calendar.timeInMillis, alarmIntent)
-        INTENTS.add(alarmIntent)
+        INTENTS.add(intent)
+        TIME.add(calendar.timeInMillis)
     }
 
     private fun loadTemplates() {

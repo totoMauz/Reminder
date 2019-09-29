@@ -29,12 +29,12 @@ class AlarmReceiver : BroadcastReceiver() {
         var title = context.getString(R.string.app_name)
         if (intent != null) {
             //val reminder = intent.getParcelableExtra<Reminder>(REMINDER_EXTRA)
-            val reminder = intent.extras.getParcelable<Reminder>(REMINDER_EXTRA)
+            val reminder = intent.extras?.getParcelable<Reminder>(REMINDER_EXTRA)
 
-            if (reminder != null) {
-                title = reminder.name
-            }
+            title = reminder?.name ?: intent.getStringExtra("asd")
+
         }
+
 
         val mBuilder = NotificationCompat.Builder(context, "intent group")
             .setSmallIcon(R.drawable.ic_launcher_background)

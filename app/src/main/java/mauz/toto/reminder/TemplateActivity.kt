@@ -12,7 +12,6 @@ class TemplateActivity : AppCompatActivity() {
     companion object {
         const val fileName = "templates"
         const val TOKEN = "NewTemplate"
-        const val HOUR_TO_MINUTE = 60
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

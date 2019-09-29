@@ -17,11 +17,11 @@ data class Reminder(val name: String, val duration: Int) : Parcelable{
         var hours = 0
 
         var minutes: Int = duration
-        if (minutes >= TemplateActivity.HOUR_TO_MINUTE) {
-            hours = (minutes / TemplateActivity.HOUR_TO_MINUTE)
-            minutes -= hours * TemplateActivity.HOUR_TO_MINUTE
+        if (minutes >= HOUR_TO_MINUTE) {
+            hours = (minutes / HOUR_TO_MINUTE)
+            minutes -= hours * HOUR_TO_MINUTE
         }
-        return "${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}"
+        return "${formatTime(hours, minutes)}"
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {

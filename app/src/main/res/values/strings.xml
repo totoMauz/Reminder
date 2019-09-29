@@ -1,14 +1,16 @@
 <resources>
     <string name="app_name">Reminder</string>
     <string name="action_settings">Settings</string>
-    <string name="action_new_template">Create a new Template</string>
-    <string name="action_list_templates">List Reminders</string>
+    <string name="action_new_template">New Template</string>
+    <string name="action_list_templates">List Templates</string>
+    <string name="action_list_reminder">List Reminder</string>
     <string name="txt_duration">Duration</string>
     <string name="txt_reminder_name">Name</string>
-    <string name="msgSaveTemplateError">Couldn\'t save template</string>
+    <string name="msgSaveTemplateError">Could not save template</string>
     <string name="msgSaveTemplateSuccess">Template saved successfully</string>
-    <string name="msgLoadTemplateError">Couldn\'t load templates</string>
+    <string name="msgLoadTemplateError">Could not load templates</string>
     <string name="msgInvalidDurationInput">Invalid duration input</string>
     <string name="msgInvalidNameInput">Invalid name input</string>
     <string name="msgNotificationText">The time has come</string>
+    <string name="msgCancelReminder">Cancel Reminder</string>
 </resources>

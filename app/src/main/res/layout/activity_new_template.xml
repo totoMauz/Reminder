@@ -5,7 +5,6 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/lblName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:labelFor="@id/txtName"
@@ -20,7 +19,6 @@
         android:importantForAutofill="no" />
 
     <TextView
-        android:id="@+id/lblDuration"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:labelFor="@id/txtDuration"
@@ -35,7 +33,6 @@
         android:inputType="time" />
 
     <Button
-        android:id="@+id/btnSave"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="saveTemplate"

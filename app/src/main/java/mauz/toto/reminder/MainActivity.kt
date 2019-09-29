@@ -35,6 +35,12 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
                 true
             }
+            R.id.action_list_reminder -> {
+                Log.v(TOKEN, "initialize maintain reminder activity")
+                val intent = Intent(this, MaintainReminderActivity::class.java)
+                startActivity(intent)
+                true
+            }
             R.id.action_list_templates -> {
                 Log.v(TOKEN, "initialize maintain templates activity")
                 val intent = Intent(this, MaintainTemplatesActivity::class.java)

@@ -4,6 +4,10 @@ import android.content.Context
 import android.util.Log
 import android.widget.Toast
 
+const val HOUR_TO_MILLIS = 3600000
+const val HOUR_TO_MINUTE = 60
+const val MINUTE_TO_MILLIS = 60000
+
 fun err(token: String, applicationContext: Context, msg: String) {
     makeToast(applicationContext, msg)
 
@@ -28,4 +32,12 @@ fun makeToast(applicationContext: Context, msg: String) {
         msg,
         Toast.LENGTH_SHORT
     ).show()
+}
+
+fun formatTime(hours: Number, minutes: Number): String {
+    return "${padNumber(hours)}:${padNumber(minutes)}"
+}
+
+private fun padNumber(num: Number): String {
+    return num.toString().padStart(2, '0')
 }

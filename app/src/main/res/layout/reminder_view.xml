@@ -5,22 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+
     <TextView
-        android:id="@+id/lblTemplateName"
+        android:id="@+id/lblReminderName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        app:layout_constraintEnd_toStartOf="@+id/lblTemplateDuration"
+        app:layout_constraintEnd_toStartOf="@+id/lblRemainingDuration"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </TextView>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/lblTemplateDuration"
+        android:id="@+id/lblRemainingDuration"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -28,15 +26,14 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="HH:mm" />
+        tools:text="-HH:mm" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="8dp"
         android:background="?android:attr/listDivider"
-        app:layout_constraintBottom_toBottomOf="@+id/lblTemplateName"
-        app:layout_constraintTop_toBottomOf="@+id/lblTemplateName" />
-
+        app:layout_constraintBottom_toBottomOf="@+id/lblReminderName"
+        app:layout_constraintTop_toBottomOf="@+id/lblReminderName" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

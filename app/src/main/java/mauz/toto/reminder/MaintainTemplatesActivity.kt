@@ -22,6 +22,8 @@ class MaintainTemplatesActivity : AppCompatActivity() {
         const val TOKEN = "MaintainTemplates"
         const val REMINDER_EXTRA = "EXTRA_REMINDER"
         val ITEMS: MutableList<Reminder> = ArrayList()
+        val INTENTS: MutableList<PendingIntent> = ArrayList()
+        val ID = generateSequence(0) { it + 1 }
     }
 
     fun goToNewReminder(view: View) {
@@ -55,13 +57,8 @@ class MaintainTemplatesActivity : AppCompatActivity() {
     private fun triggerAlarm(reminder: Reminder) {
         Log.v(TOKEN, "instantiate ${reminder.name}")
         makeToast(this.applicationContext, "Started ${reminder.name}")
-        val alarmIntent =
-            PendingIntent.getBroadcast(
-                this.applicationContext,
-                0,
-                intent,
-                PendingIntent.FLAG_UPDATE_CURRENT
-            )
+
+        val intent = Intent(this.applicationContext, AlarmReceiver::class.java)
         intent.putExtra(REMINDER_EXTRA, reminder)
 
         val alarmManager = this.getSystemService(ALARM_SERVICE) as AlarmManager
@@ -69,7 +66,15 @@ class MaintainTemplatesActivity : AppCompatActivity() {
         val calendar: Calendar = Calendar.getInstance()
         calendar.add(Calendar.MINUTE, reminder.duration)
 
+        val alarmIntent =
+            PendingIntent.getBroadcast(
+                this.applicationContext,
+                ID.iterator().next(),
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT
+            )
         alarmManager.set(AlarmManager.RTC, calendar.timeInMillis, alarmIntent)
+        INTENTS.add(alarmIntent)
     }
 
     private fun loadTemplates() {

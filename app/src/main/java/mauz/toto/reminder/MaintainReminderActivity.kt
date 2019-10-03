@@ -56,7 +56,7 @@ class MaintainReminderActivity : AppCompatActivity() {
         override fun run() {
             Log.d(TOKEN, "Update UI tick")
             viewAdapter.notifyDataSetChanged()
-            handler.postDelayed(this, 60000)
+            handler.postDelayed(this, 1000)
         }
     }
 }

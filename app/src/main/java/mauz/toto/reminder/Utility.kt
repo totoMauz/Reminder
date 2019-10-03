@@ -7,6 +7,7 @@ import android.widget.Toast
 const val HOUR_TO_MILLIS = 3600000
 const val HOUR_TO_MINUTE = 60
 const val MINUTE_TO_MILLIS = 60000
+const val SECONDS_TO_MILLIS = 1000
 
 fun err(token: String, applicationContext: Context, msg: String) {
     makeToast(applicationContext, msg)
@@ -34,8 +35,11 @@ fun makeToast(applicationContext: Context, msg: String) {
     ).show()
 }
 
-fun formatTime(hours: Number, minutes: Number): String {
-    return "${padNumber(hours)}:${padNumber(minutes)}"
+fun formatTime(hours: Number, minutes: Number, seconds: Number = -1): String {
+    if (seconds == -1) {
+        return "${padNumber(hours)}:${padNumber(minutes)}"
+    }
+    return "${padNumber(hours)}:${padNumber(minutes)}:${padNumber(seconds)}"
 }
 
 private fun padNumber(num: Number): String {

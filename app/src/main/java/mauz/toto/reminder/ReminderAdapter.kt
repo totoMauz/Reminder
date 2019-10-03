@@ -42,9 +42,11 @@ class ReminderAdapter(private val items: List<Intent>) :
         val hours = diff / HOUR_TO_MILLIS
         diff -= hours * HOUR_TO_MILLIS
         val minutes = diff / MINUTE_TO_MILLIS
+        diff -= minutes * MINUTE_TO_MILLIS
+        val seconds = diff / SECONDS_TO_MILLIS
 
         holder.textViewName.text =  items[position].getStringExtra(EXTRA_REMINDER)
-        holder.textViewRemainingDuration.text = "-${formatTime(hours, minutes)}"
+        holder.textViewRemainingDuration.text = "-${formatTime(hours, minutes, seconds)}"
     }
 
     override fun getItemCount() = items.size

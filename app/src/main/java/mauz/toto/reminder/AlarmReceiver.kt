@@ -17,6 +17,7 @@ class AlarmReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
         buildNotification(context, intent)
+        MaintainReminderActivity.INTENTS.remove(intent)
     }
 
     private fun buildNotification(context: Context?, intent: Intent?) {

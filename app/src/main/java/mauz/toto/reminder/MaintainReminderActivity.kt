@@ -16,7 +16,6 @@ class MaintainReminderActivity : AppCompatActivity() {
     companion object {
         const val TOKEN = "MaintainReminder"
         val INTENTS: MutableList<Intent> = ArrayList()
-        val TIME: MutableList<Long> = ArrayList()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,7 +23,7 @@ class MaintainReminderActivity : AppCompatActivity() {
         setContentView(R.layout.activity_maintain_reminder)
 
         viewManager = LinearLayoutManager(this)
-        viewAdapter = ReminderAdapter(INTENTS, TIME)
+        viewAdapter = ReminderAdapter(INTENTS)
         (viewAdapter as ReminderAdapter).onItemClick = { intent: Intent ->
             cancelAlarm(intent)
         }
@@ -46,7 +45,6 @@ class MaintainReminderActivity : AppCompatActivity() {
 
         val position = INTENTS.indexOf(intent)
         INTENTS.removeAt(position)
-        TIME.removeAt(position)
         viewAdapter.notifyDataSetChanged()
     }
 }

@@ -7,7 +7,7 @@ import android.content.Intent
 import android.media.RingtoneManager
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import mauz.toto.reminder.MaintainTemplatesActivity.Companion.REMINDER_EXTRA
+import mauz.toto.reminder.MaintainTemplatesActivity.Companion.EXTRA_REMINDER
 
 
 class AlarmReceiver : BroadcastReceiver() {
@@ -28,13 +28,8 @@ class AlarmReceiver : BroadcastReceiver() {
 
         var title = context.getString(R.string.app_name)
         if (intent != null) {
-            //val reminder = intent.getParcelableExtra<Reminder>(REMINDER_EXTRA)
-            val reminder = intent.extras?.getParcelable<Reminder>(REMINDER_EXTRA)
-
-            title = reminder?.name ?: intent.getStringExtra("asd")
-
+            title = intent.getStringExtra(EXTRA_REMINDER)
         }
-
 
         val mBuilder = NotificationCompat.Builder(context, "intent group")
             .setSmallIcon(R.drawable.ic_launcher_background)
@@ -44,7 +39,5 @@ class AlarmReceiver : BroadcastReceiver() {
 
         notificationManager.notify(0, mBuilder.build())
     }
-
-
 }
 

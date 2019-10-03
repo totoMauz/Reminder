@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import mauz.toto.reminder.MaintainTemplatesActivity.Companion.EXTRA_REMINDER
+import mauz.toto.reminder.MaintainTemplatesActivity.Companion.EXTRA_TIME
 import java.util.*
 
-class ReminderAdapter(private val items: List<Intent>, private val time: List<Long>) :
+class ReminderAdapter(private val items: List<Intent>) :
     RecyclerView.Adapter<ReminderAdapter.MyViewHolder>() {
     var onItemClick: ((Intent) -> Unit)? = null
 
@@ -34,17 +36,14 @@ class ReminderAdapter(private val items: List<Intent>, private val time: List<Lo
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val reminder =
-            items[position].extras?.getParcelable<Reminder>(MaintainTemplatesActivity.REMINDER_EXTRA)
-
         val calendar: Calendar = Calendar.getInstance()
-        var diff = time[position] - calendar.timeInMillis
+        var diff = items[position].getLongExtra(EXTRA_TIME, 0) - calendar.timeInMillis
 
         val hours = diff / HOUR_TO_MILLIS
         diff -= hours * HOUR_TO_MILLIS
         val minutes = diff / MINUTE_TO_MILLIS
 
-        holder.textViewName.text = reminder?.name
+        holder.textViewName.text =  items[position].getStringExtra(EXTRA_REMINDER)
         holder.textViewRemainingDuration.text = "-${formatTime(hours, minutes)}"
     }
 

@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import mauz.toto.reminder.MaintainReminderActivity.Companion.INTENTS
-import mauz.toto.reminder.MaintainReminderActivity.Companion.TIME
 import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
@@ -22,7 +21,8 @@ class MaintainTemplatesActivity : AppCompatActivity() {
 
     companion object {
         const val TOKEN = "MaintainTemplates"
-        const val REMINDER_EXTRA = "EXTRA_REMINDER"
+        const val EXTRA_REMINDER = "EXTRA_REMINDER"
+        const val EXTRA_TIME = "EXTRA_TIME"
         val ITEMS: MutableList<Reminder> = ArrayList()
         val ID = generateSequence(0) { it + 1 }
     }
@@ -59,12 +59,12 @@ class MaintainTemplatesActivity : AppCompatActivity() {
         Log.v(TOKEN, "instantiate ${reminder.name}")
         makeToast(this.applicationContext, "Started ${reminder.name}")
 
-        val intent = Intent(this.applicationContext, AlarmReceiver::class.java)
-        intent.putExtra(REMINDER_EXTRA, reminder)
-        intent.putExtra("asd", reminder.name)
-
         val calendar: Calendar = Calendar.getInstance()
         calendar.add(Calendar.MINUTE, reminder.duration)
+
+        val intent = Intent(this.applicationContext, AlarmReceiver::class.java)
+        intent.putExtra(EXTRA_REMINDER, reminder.name)
+        intent.putExtra(EXTRA_TIME, calendar.timeInMillis)
 
         val alarmIntent =
             PendingIntent.getBroadcast(
@@ -77,7 +77,6 @@ class MaintainTemplatesActivity : AppCompatActivity() {
         val alarmManager = this.getSystemService(ALARM_SERVICE) as AlarmManager
         alarmManager.set(AlarmManager.RTC, calendar.timeInMillis, alarmIntent)
         INTENTS.add(intent)
-        TIME.add(calendar.timeInMillis)
     }
 
     private fun loadTemplates() {

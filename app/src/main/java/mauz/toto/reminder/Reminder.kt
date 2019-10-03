@@ -1,14 +1,6 @@
 package mauz.toto.reminder
 
-import android.os.Parcel
-import android.os.Parcelable
-
-data class Reminder(val name: String, val duration: Int) : Parcelable{
-    constructor(parcel: Parcel) : this(
-        parcel.readString(),
-        parcel.readInt()
-    )
-
+data class Reminder(val name: String, val duration: Int) {
     override fun toString(): String {
         return "$name\t${getDuration()}"
     }
@@ -21,25 +13,6 @@ data class Reminder(val name: String, val duration: Int) : Parcelable{
             hours = (minutes / HOUR_TO_MINUTE)
             minutes -= hours * HOUR_TO_MINUTE
         }
-        return "${formatTime(hours, minutes)}"
-    }
-
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(name)
-        parcel.writeInt(duration)
-    }
-
-    override fun describeContents(): Int {
-        return 0
-    }
-
-    companion object CREATOR : Parcelable.Creator<Reminder> {
-        override fun createFromParcel(parcel: Parcel): Reminder {
-            return Reminder(parcel)
-        }
-
-        override fun newArray(size: Int): Array<Reminder?> {
-            return arrayOfNulls(size)
-        }
+        return formatTime(hours, minutes)
     }
 }

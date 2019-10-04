@@ -93,6 +93,9 @@ class MaintainTemplatesActivity : AppCompatActivity() {
                 val duration = parts[1].toInt()
                 ITEMS.add(Reminder(name, duration))
             }
+
+            ITEMS.sortWith(ComparatorReminder())
+
             if (::viewAdapter.isInitialized)
                 viewAdapter.notifyDataSetChanged()
         } else {

@@ -16,3 +16,9 @@ data class Reminder(val name: String, val duration: Int) {
         return formatTime(hours, minutes)
     }
 }
+
+class ComparatorReminder: Comparator<Reminder> {
+    override fun compare(r1: Reminder, r2: Reminder): Int{
+        return r2.name.compareTo(r1.name)
+    }
+}

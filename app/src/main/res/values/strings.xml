@@ -13,4 +13,6 @@
     <string name="msgInvalidNameInput">Invalid name input</string>
     <string name="msgNotificationText">The time has come</string>
     <string name="msgCancelReminder">Cancel Reminder</string>
+    <string name="action_mode_template_delete">Delete</string>
+    <string name="action_mode_template_edit">Edit</string>
 </resources>

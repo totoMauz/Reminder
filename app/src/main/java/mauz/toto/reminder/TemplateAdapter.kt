@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 class TemplateAdapter(private val items: List<Reminder>) :
     RecyclerView.Adapter<TemplateAdapter.MyViewHolder>() {
     var onItemClick: ((Reminder) -> Unit)? = null
+    var onLongItemClick: ((Reminder) -> Boolean)? = null
 
     inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val textViewName: TextView = view.findViewById(R.id.lblTemplateName)
@@ -17,6 +18,10 @@ class TemplateAdapter(private val items: List<Reminder>) :
         init {
             view.setOnClickListener {
                 onItemClick?.invoke(items[adapterPosition])
+            }
+            view.setOnLongClickListener {
+                onLongItemClick?.invoke(items[adapterPosition])
+                true
             }
         }
     }

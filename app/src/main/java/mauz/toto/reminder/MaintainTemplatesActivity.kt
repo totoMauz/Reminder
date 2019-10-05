@@ -20,6 +20,7 @@ class MaintainTemplatesActivity : AppCompatActivity() {
     private lateinit var viewManager: RecyclerView.LayoutManager
 
     companion object {
+
         const val TOKEN = "MaintainTemplates"
         const val EXTRA_REMINDER = "EXTRA_REMINDER"
         const val EXTRA_TIME = "EXTRA_TIME"
@@ -50,7 +51,7 @@ class MaintainTemplatesActivity : AppCompatActivity() {
             triggerAlarm(reminder)
         }
         (viewAdapter as TemplateAdapter).onLongItemClick = { reminder: Reminder ->
-            startActionMode(TemplateActionModeCallback(reminder), ActionMode.TYPE_FLOATING)
+            startActionMode(TemplateActionModeCallback(reminder), ActionMode.TYPE_PRIMARY)
             true
         }
         recyclerView = findViewById<RecyclerView>(R.id.rvTemplates).apply {

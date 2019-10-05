@@ -6,19 +6,19 @@ import android.view.MenuItem
 
 class TemplateActionModeCallback(val reminder: Reminder) : ActionMode.Callback {
     override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
-        when (item.itemId) {
+        return when (item.itemId) {
             R.id.template_delete -> {
                 MaintainTemplatesActivity.ITEMS.remove(reminder)
                 mode.finish()
-                return true
+                true
             }
             R.id.template_edit -> {
                 // TODO open activity with names and flag
                 mode.finish()
-                return true
+                true
             }
+            else -> false
         }
-        return false
     }
 
     override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {

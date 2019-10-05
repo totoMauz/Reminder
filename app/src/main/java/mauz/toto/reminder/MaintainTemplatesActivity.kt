@@ -26,8 +26,8 @@ class MaintainTemplatesActivity : AppCompatActivity() {
         const val EXTRA_REMINDER = "EXTRA_REMINDER"
         const val EXTRA_TIME = "EXTRA_TIME"
         val ITEMS: MutableList<Reminder> = ArrayList()
-        val ID = generateSequence(0) { it + 1 }
     }
+    private val id = generateSequence(0) { it + 1 }
 
     fun goToNewReminder(view: View) {
         Log.v(TOKEN, "initialize new template instance")
@@ -71,6 +71,7 @@ class MaintainTemplatesActivity : AppCompatActivity() {
             ITEMS.removeAt(oldPosition)
             ITEMS.add(0, reminder)
 
+            viewAdapter?.notifyDataSetChanged()
             saveTemplates()
         }
 
@@ -84,7 +85,7 @@ class MaintainTemplatesActivity : AppCompatActivity() {
         val alarmIntent =
             PendingIntent.getBroadcast(
                 this.applicationContext,
-                ID.iterator().next(),
+                id.iterator().next(),
                 intent,
                 PendingIntent.FLAG_UPDATE_CURRENT
             )
@@ -131,8 +132,7 @@ class MaintainTemplatesActivity : AppCompatActivity() {
                 ITEMS.add(Reminder(name, duration))
             }
 
-            if (::viewAdapter.isInitialized)
-                viewAdapter.notifyDataSetChanged()
+            viewAdapter?.notifyDataSetChanged()
         } else {
             err(TOKEN, this.applicationContext, getString(R.string.msgLoadTemplateError))
         }

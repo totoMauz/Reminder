@@ -32,10 +32,10 @@ class AlarmReceiver : BroadcastReceiver() {
             title = intent.getStringExtra(EXTRA_REMINDER)
         }
 
-        val mBuilder = NotificationCompat.Builder(context, "intent group")
+        val mBuilder = NotificationCompat.Builder(context, "")
             .setSmallIcon(R.drawable.ic_launcher_background)
             .setContentTitle(title)
-            .setContentText(context.getString(R.string.msgNotificationText))
+            .setContentText("")
             .setSound(soundUri)
 
         notificationManager.notify(0, mBuilder.build())

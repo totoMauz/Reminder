@@ -64,11 +64,7 @@ class TemplateActivity : AppCompatActivity() {
             err(TOKEN, this.applicationContext, getString(R.string.msgSaveTemplateError), e)
         }
 
-        Toast.makeText(
-            this.applicationContext,
-            getString(R.string.msgSaveTemplateSuccess),
-            Toast.LENGTH_SHORT
-        ).show()
+        makeToast(applicationContext, getString(R.string.msgSaveTemplateSuccess) )
         this.finish()
     }
 }

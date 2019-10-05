@@ -1,16 +1,13 @@
 package mauz.toto.reminder
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 class TemplateActivity : AppCompatActivity() {
     companion object {
-        const val FILE_NAME = "templates"
         const val TOKEN = "NewTemplate"
     }
 
@@ -56,13 +53,7 @@ class TemplateActivity : AppCompatActivity() {
             return
         }
 
-        try {
-            val fos = openFileOutput(FILE_NAME, Context.MODE_PRIVATE + Context.MODE_APPEND)
-            fos.write("$name;$duration\n".toByteArray())
-            fos.close()
-        } catch (e: Exception) {
-            err(TOKEN, this.applicationContext, getString(R.string.msgSaveTemplateError), e)
-        }
+        appendReminder(applicationContext, Reminder(name, duration))
 
         makeToast(applicationContext, getString(R.string.msgSaveTemplateSuccess) )
         this.finish()

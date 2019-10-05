@@ -2,7 +2,6 @@ package mauz.toto.reminder
 
 import android.app.AlarmManager
 import android.app.PendingIntent
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -12,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import mauz.toto.reminder.MaintainReminderActivity.Companion.INTENTS
-import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -27,6 +25,7 @@ class MaintainTemplatesActivity : AppCompatActivity() {
         const val EXTRA_TIME = "EXTRA_TIME"
         val ITEMS: MutableList<Reminder> = ArrayList()
     }
+
     private val id = generateSequence(0) { it + 1 }
 
     fun goToNewReminder(view: View) {
@@ -71,8 +70,8 @@ class MaintainTemplatesActivity : AppCompatActivity() {
             ITEMS.removeAt(oldPosition)
             ITEMS.add(0, reminder)
 
-            viewAdapter?.notifyDataSetChanged()
-            saveTemplates()
+            viewAdapter.notifyDataSetChanged()
+            writeReminder(applicationContext, ITEMS)
         }
 
         val calendar: Calendar = Calendar.getInstance()
@@ -95,46 +94,11 @@ class MaintainTemplatesActivity : AppCompatActivity() {
         INTENTS.add(intent)
     }
 
-    private fun saveTemplates() {
-        Log.v(TOKEN, "Save persisted templates")
-        try {
-            val fos = openFileOutput(
-                TemplateActivity.FILE_NAME,
-                Context.MODE_PRIVATE
-            )
-
-            for (template in ITEMS) {
-                fos.write("$template.name;$template.duration\n".toByteArray())
-            }
-            fos.close()
-        } catch (e: Exception) {
-            err(
-                TOKEN,
-                this.applicationContext,
-                getString(R.string.msgSaveTemplateError),
-                e
-            )
-        }
-    }
-
     private fun loadTemplates() {
-        Log.v(TOKEN, "Load persisted templates")
-
-        val templates = File(filesDir, TemplateActivity.FILE_NAME)
-
-        if (templates.isFile && templates.canRead()) {
-            ITEMS.clear()
-            val lines = File(filesDir, TemplateActivity.FILE_NAME).readLines()
-            for (line in lines) {
-                val parts = line.split(";")
-                val name = parts[0]
-                val duration = parts[1].toInt()
-                ITEMS.add(Reminder(name, duration))
-            }
-
-            viewAdapter?.notifyDataSetChanged()
-        } else {
-            err(TOKEN, this.applicationContext, getString(R.string.msgLoadTemplateError))
+        ITEMS.clear()
+        ITEMS.addAll(readReminder(applicationContext))
+        if (::viewAdapter.isInitialized) {
+            viewAdapter.notifyDataSetChanged()
         }
     }
 }

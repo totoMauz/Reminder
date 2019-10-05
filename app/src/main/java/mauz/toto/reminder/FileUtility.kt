@@ -14,7 +14,7 @@ fun appendReminder(context: Context, reminder: Reminder) {
         fos.write("${reminder.name};${reminder.duration}\n".toByteArray())
         fos.close()
     } catch (e: Exception) {
-        err(TOKEN, context, context.getString(R.string.msgSaveTemplateError), e)
+        err(TOKEN, context, context.getString(R.string.msgSaveTemplateError, reminder.name), e)
     }
 }
 
@@ -34,7 +34,7 @@ fun writeReminder(context: Context, reminder: MutableList<Reminder>) {
         err(
             TOKEN,
             context,
-            context.getString(R.string.msgSaveTemplateError),
+            context.getString(R.string.msgSaveTemplatesError),
             e
         )
     }

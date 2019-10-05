@@ -47,7 +47,7 @@ class TemplateActivity : AppCompatActivity() {
 
         val duration = transformDuration()
         if (duration <= 0) {
-            dbg(TOKEN, this.applicationContext, getString(R.string.msgInvalidDurationInput))
+            dbg(TOKEN, this.applicationContext, getString(R.string.msgInvalidDurationInput, findViewById<TextView>(R.id.txtDuration).text.toString()))
 
             findViewById<TextView>(R.id.txtDuration).requestFocus()
             return
@@ -55,7 +55,7 @@ class TemplateActivity : AppCompatActivity() {
 
         appendReminder(applicationContext, Reminder(name, duration))
 
-        makeToast(applicationContext, getString(R.string.msgSaveTemplateSuccess) )
+        makeToast(applicationContext, getString(R.string.msgSaveTemplateSuccess, name) )
         this.finish()
     }
 }

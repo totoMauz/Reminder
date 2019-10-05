@@ -47,12 +47,15 @@ class MaintainTemplatesActivity : AppCompatActivity() {
 
         viewManager = LinearLayoutManager(this)
         viewAdapter = TemplateAdapter(ITEMS)
-        (viewAdapter as TemplateAdapter).onItemClick = { reminder: Reminder ->
-            triggerAlarm(reminder)
-        }
-        (viewAdapter as TemplateAdapter).onLongItemClick = { reminder: Reminder ->
-            startActionMode(TemplateActionModeCallback(reminder), ActionMode.TYPE_PRIMARY)
-            true
+
+        (viewAdapter as TemplateAdapter).apply {
+            onItemClick = { reminder: Reminder ->
+                triggerAlarm(reminder)
+            }
+            onLongItemClick = { reminder: Reminder ->
+                startActionMode(TemplateActionModeCallback(reminder), ActionMode.TYPE_PRIMARY)
+                true
+            }
         }
         recyclerView = findViewById<RecyclerView>(R.id.rvTemplates).apply {
             setHasFixedSize(true)

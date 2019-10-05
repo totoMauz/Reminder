@@ -5,10 +5,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
+import android.view.ActionMode
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-
+import mauz.toto.reminder.MaintainTemplatesActivity.Companion.EXTRA_REMINDER
 
 class MaintainReminderActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
@@ -28,8 +29,10 @@ class MaintainReminderActivity : AppCompatActivity() {
 
         viewManager = LinearLayoutManager(this)
         viewAdapter = ReminderAdapter(INTENTS)
-        (viewAdapter as ReminderAdapter).onItemClick = { intent: Intent ->
-            cancelAlarm(intent)
+        (viewAdapter as ReminderAdapter).apply {
+            onItemClick = { intent: Intent ->
+                cancelAlarm(intent)
+            }
         }
         recyclerView = findViewById<RecyclerView>(R.id.rvReminder).apply {
             setHasFixedSize(true)
@@ -40,7 +43,7 @@ class MaintainReminderActivity : AppCompatActivity() {
 
     private fun cancelAlarm(intent: Intent) {
         Log.v(TOKEN, "cancel reminder")
-        makeToast(this.applicationContext, getString(R.string.msgCancelReminder))
+        makeToast(this.applicationContext, getString(R.string.msgCancelReminder, intent.getStringExtra(EXTRA_REMINDER)))
 
         PendingIntent.getBroadcast(
             this.applicationContext, 0, intent,

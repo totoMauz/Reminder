@@ -2,6 +2,7 @@ package mauz.toto.reminder
 
 import android.app.AlarmManager
 import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -64,6 +65,15 @@ class MaintainTemplatesActivity : AppCompatActivity() {
         Log.v(TOKEN, "instantiate ${reminder.name}")
         makeToast(this.applicationContext, "Started ${reminder.name}")
 
+        val oldPosition = ITEMS.indexOf(reminder)
+        if (oldPosition > 0) {
+            // move to beginning of least to have most recently used templates first
+            ITEMS.removeAt(oldPosition)
+            ITEMS.add(0, reminder)
+
+            saveTemplates()
+        }
+
         val calendar: Calendar = Calendar.getInstance()
         calendar.add(Calendar.MINUTE, reminder.duration)
 
@@ -84,22 +94,42 @@ class MaintainTemplatesActivity : AppCompatActivity() {
         INTENTS.add(intent)
     }
 
+    private fun saveTemplates() {
+        Log.v(TOKEN, "Save persisted templates")
+        try {
+            val fos = openFileOutput(
+                TemplateActivity.FILE_NAME,
+                Context.MODE_PRIVATE
+            )
+
+            for (template in ITEMS) {
+                fos.write("$template.name;$template.duration\n".toByteArray())
+            }
+            fos.close()
+        } catch (e: Exception) {
+            err(
+                TOKEN,
+                this.applicationContext,
+                getString(R.string.msgSaveTemplateError),
+                e
+            )
+        }
+    }
+
     private fun loadTemplates() {
         Log.v(TOKEN, "Load persisted templates")
 
-        val templates = File(filesDir, TemplateActivity.fileName)
+        val templates = File(filesDir, TemplateActivity.FILE_NAME)
 
         if (templates.isFile && templates.canRead()) {
             ITEMS.clear()
-            val lines = File(filesDir, TemplateActivity.fileName).readLines()
+            val lines = File(filesDir, TemplateActivity.FILE_NAME).readLines()
             for (line in lines) {
                 val parts = line.split(";")
                 val name = parts[0]
                 val duration = parts[1].toInt()
                 ITEMS.add(Reminder(name, duration))
             }
-
-            ITEMS.sortWith(ComparatorReminder())
 
             if (::viewAdapter.isInitialized)
                 viewAdapter.notifyDataSetChanged()

@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 
 class TemplateActivity : AppCompatActivity() {
     companion object {
-        const val fileName = "templates"
+        const val FILE_NAME = "templates"
         const val TOKEN = "NewTemplate"
     }
 
@@ -57,7 +57,7 @@ class TemplateActivity : AppCompatActivity() {
         }
 
         try {
-            val fos = openFileOutput(fileName, Context.MODE_PRIVATE + Context.MODE_APPEND)
+            val fos = openFileOutput(FILE_NAME, Context.MODE_PRIVATE + Context.MODE_APPEND)
             fos.write("$name;$duration\n".toByteArray())
             fos.close()
         } catch (e: Exception) {

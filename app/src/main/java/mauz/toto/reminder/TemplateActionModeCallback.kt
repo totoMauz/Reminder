@@ -1,19 +1,27 @@
 package mauz.toto.reminder
 
+import android.content.Intent
 import android.view.ActionMode
 import android.view.Menu
 import android.view.MenuItem
+import mauz.toto.reminder.MaintainTemplatesActivity.Companion.EXTRA_DURATION
+import mauz.toto.reminder.MaintainTemplatesActivity.Companion.EXTRA_REMINDER
 
-class TemplateActionModeCallback(val reminder: Reminder) : ActionMode.Callback {
+class TemplateActionModeCallback(val reminder: Reminder, private val templateActivity: MaintainTemplatesActivity) : ActionMode.Callback {
     override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.template_delete -> {
-                MaintainTemplatesActivity.ITEMS.remove(reminder)
+                templateActivity.deleteTemplate(reminder)
                 mode.finish()
                 true
             }
             R.id.template_edit -> {
-                // TODO open activity with names and flag
+                templateActivity.deleteTemplate(reminder)
+
+                val intent = Intent(templateActivity.applicationContext, TemplateActivity::class.java)
+                intent.putExtra(EXTRA_REMINDER, reminder.name)
+                intent.putExtra(EXTRA_DURATION, reminder.duration)
+                templateActivity.startActivityForResult(intent, 1)
                 mode.finish()
                 true
             }

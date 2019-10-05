@@ -1,5 +1,6 @@
 package mauz.toto.reminder
 
+import android.app.Activity
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Intent
@@ -20,10 +21,10 @@ class MaintainTemplatesActivity : AppCompatActivity() {
     private lateinit var viewManager: RecyclerView.LayoutManager
 
     companion object {
-
         const val TOKEN = "MaintainTemplates"
         const val EXTRA_REMINDER = "EXTRA_REMINDER"
         const val EXTRA_TIME = "EXTRA_TIME"
+        const val EXTRA_DURATION = "EXTRA_DURATION"
         val ITEMS: MutableList<Reminder> = ArrayList()
     }
 
@@ -40,6 +41,15 @@ class MaintainTemplatesActivity : AppCompatActivity() {
         super.onResume()
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == 1) {
+            if(resultCode == Activity.RESULT_OK) {
+                // TODO update the correct item
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maintain_templates)
@@ -53,7 +63,7 @@ class MaintainTemplatesActivity : AppCompatActivity() {
                 triggerAlarm(reminder)
             }
             onLongItemClick = { reminder: Reminder ->
-                startActionMode(TemplateActionModeCallback(reminder), ActionMode.TYPE_PRIMARY)
+                startActionMode(TemplateActionModeCallback(reminder, this@MaintainTemplatesActivity), ActionMode.TYPE_PRIMARY)
                 true
             }
         }
@@ -61,6 +71,14 @@ class MaintainTemplatesActivity : AppCompatActivity() {
             setHasFixedSize(true)
             layoutManager = viewManager
             adapter = viewAdapter
+        }
+    }
+
+    fun deleteTemplate(reminder: Reminder) {
+        ITEMS.remove(reminder)
+        writeReminder(applicationContext, ITEMS)
+        if(::viewAdapter.isInitialized) {
+            viewAdapter.notifyDataSetChanged()
         }
     }
 

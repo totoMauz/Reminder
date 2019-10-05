@@ -22,6 +22,10 @@ class MaintainReminderActivity : AppCompatActivity() {
         val INTENTS: MutableList<Intent> = ArrayList()
     }
 
+    fun update() {
+
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maintain_reminder)

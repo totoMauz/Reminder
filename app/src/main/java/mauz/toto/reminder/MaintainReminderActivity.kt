@@ -22,14 +22,19 @@ class MaintainReminderActivity : AppCompatActivity() {
         val INTENTS: MutableList<Intent> = ArrayList()
     }
 
-    fun update() {
+    override fun onResume() {
+        super.onResume()
+        handler.post(runnableCode)
+    }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        handler.removeCallbacks(runnableCode)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maintain_reminder)
-        handler.post(runnableCode)
 
         viewManager = LinearLayoutManager(this)
         viewAdapter = ReminderAdapter(INTENTS)

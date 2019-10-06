@@ -24,12 +24,14 @@ class TemplateActivity : AppCompatActivity() {
     override fun onResume() {
         if (intent != null) {
             val name = intent.getStringExtra(EXTRA_REMINDER)
-            findViewById<TextView>(R.id.txtName).text = name
+            if (name != null) {
+                findViewById<TextView>(R.id.txtName).text = name
 
-            val duration = intent.getIntExtra(EXTRA_DURATION, 0)
+                val duration = intent.getIntExtra(EXTRA_DURATION, 0)
 
-            val reminder = Reminder(name, duration)
-            findViewById<TextView>(R.id.txtDuration).text = reminder.getDuration()
+                val reminder = Reminder(name, duration)
+                findViewById<TextView>(R.id.txtDuration).text = reminder.getDuration()
+            }
         }
 
         super.onResume()

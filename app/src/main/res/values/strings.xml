@@ -13,7 +13,6 @@
     <string name="msgInvalidDurationInput">Invalid duration input %1$s</string>
     <string name="msgInvalidNameInput">Invalid name input</string>
     <string name="msgCancelReminder">Canceled Reminder %1$s</string>
-    <string name="msgHoldToCancel">Click long to cancel</string>
     <string name="action_mode_template_delete">Delete</string>
     <string name="action_mode_template_edit">Edit</string>
 </resources>

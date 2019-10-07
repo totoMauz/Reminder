@@ -1,7 +1,5 @@
 package mauz.toto.reminder
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -9,7 +7,6 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import mauz.toto.reminder.MaintainTemplatesActivity.Companion.EXTRA_DURATION
 import mauz.toto.reminder.MaintainTemplatesActivity.Companion.EXTRA_REMINDER
-import mauz.toto.reminder.MaintainTemplatesActivity.Companion.EXTRA_TIME
 
 class TemplateActivity : AppCompatActivity() {
     companion object {
@@ -84,11 +81,6 @@ class TemplateActivity : AppCompatActivity() {
         appendReminder(applicationContext, Reminder(name, duration))
 
         makeToast(applicationContext, getString(R.string.msgSaveTemplateSuccess, name))
-
-        val result = Intent()
-        result.putExtra(EXTRA_REMINDER, name)
-        result.putExtra(EXTRA_TIME, duration)
-        setResult(Activity.RESULT_OK, result)
 
         this.finish()
     }

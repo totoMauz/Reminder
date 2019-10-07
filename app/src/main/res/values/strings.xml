@@ -6,8 +6,6 @@
     <string name="action_list_reminder">List Reminder</string>
     <string name="txt_duration">Duration</string>
     <string name="txt_reminder_name">Name</string>
-    <string name="msgSaveTemplateError">Could not save template %1$s</string>
-    <string name="msgSaveTemplatesError">Could not save templates</string>
     <string name="msgSaveTemplateSuccess">Template %1$s saved successfully</string>
     <string name="msgLoadTemplateError">Could not load templates</string>
     <string name="msgInvalidDurationInput">Invalid duration input %1$s</string>

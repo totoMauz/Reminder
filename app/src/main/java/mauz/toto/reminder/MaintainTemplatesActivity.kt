@@ -1,6 +1,5 @@
 package mauz.toto.reminder
 
-import android.app.Activity
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Intent
@@ -39,15 +38,6 @@ class MaintainTemplatesActivity : AppCompatActivity() {
     override fun onResume() {
         loadTemplates()
         super.onResume()
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == 1) {
-            if(resultCode == Activity.RESULT_OK) {
-                // TODO update the correct item
-            }
-        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

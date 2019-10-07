@@ -15,12 +15,6 @@ fun err(token: String, applicationContext: Context, msg: String) {
     Log.e(token, msg)
 }
 
-fun err(token: String, applicationContext: Context, msg: String, error: Exception) {
-    makeToast(applicationContext, msg)
-
-    Log.e(token, msg + " " + error.printStackTrace())
-}
-
 fun dbg(token: String, applicationContext: Context, msg: String) {
     makeToast(applicationContext, msg)
 

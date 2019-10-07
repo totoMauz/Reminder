@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Reminder</string>
+    <string name="action_list_reminder">Zeige Erinnerungen</string>
+    <string name="action_list_templates">Zeige Vorlagen</string>
+    <string name="action_mode_template_delete">Löschen</string>
+    <string name="action_mode_template_edit">Bearbeiten</string>
+    <string name="action_new_template">Neue Vorlage</string>
+    <string name="action_settings">Einstellungen</string>
+    <string name="msgCancelReminder">Erinnerung %1$s abbrechen</string>
+    <string name="msgInvalidDurationInput">Ungültige dauer %1$s</string>
+    <string name="msgInvalidNameInput">Ungültiger Name</string>
+    <string name="msgSaveTemplateSuccess">Vorlage %1$s gespeichert</string>
+    <string name="txt_duration">Dauer</string>
+    <string name="txt_reminder_name">Name</string>
+    <string name="msgLoadTemplateError">Fehler beim Laden der Vorlagen</string>
+</resources>

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import mauz.toto.reminder.MaintainReminderActivity.Companion.INTENTS
 import mauz.toto.reminder.MaintainTemplatesActivity.Companion.EXTRA_REMINDER
 import mauz.toto.reminder.MaintainTemplatesActivity.Companion.EXTRA_TIME
 import java.util.*
@@ -47,6 +48,10 @@ class ReminderAdapter(private val items: List<Intent>) :
 
         holder.textViewName.text =  items[position].getStringExtra(EXTRA_REMINDER)
         holder.textViewRemainingDuration.text = "-${formatTime(hours, minutes, seconds)}"
+
+        if(seconds < 0) {
+            INTENTS.removeAt(position)
+        }
     }
 
     override fun getItemCount() = items.size

@@ -3,10 +3,13 @@ package mauz.toto.reminder
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.addTextChangedListener
 import mauz.toto.reminder.MaintainTemplatesActivity.Companion.EXTRA_DURATION
 import mauz.toto.reminder.MaintainTemplatesActivity.Companion.EXTRA_REMINDER
+
 
 class TemplateActivity : AppCompatActivity() {
     companion object {
@@ -16,6 +19,34 @@ class TemplateActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_template)
+
+        val btnSave = findViewById<Button>(R.id.btnSave)
+        btnSave.isEnabled = false
+        val txtDuration = findViewById<TextView>(R.id.txtDuration)
+        val txtName = findViewById<TextView>(R.id.txtName)
+
+        txtName.addTextChangedListener(afterTextChanged = { nameString ->
+            if (nameString != null && nameString.isBlank()) {
+                txtName.error = getString(R.string.msgInvalidNameInput)
+                btnSave.isEnabled = false
+            } else {
+                txtName.error = null
+                btnSave.isEnabled = txtDuration.error == null
+            }
+        })
+
+        txtDuration.addTextChangedListener(afterTextChanged = { durationString ->
+            if (durationString != null && durationString.contains(':')) {
+                val durationParts = durationString.split(':')
+                if (durationParts.size > 2 || durationParts[0].length > 2 || durationParts[1].length > 2) {
+                    txtDuration.error = getString(R.string.msgInvalidDurationInput, txtDuration.text)
+                    btnSave.isEnabled = false
+                } else {
+                    txtDuration.error = null
+                    btnSave.isEnabled = txtName.error == null
+                }
+            }
+        })
     }
 
     override fun onResume() {
@@ -39,14 +70,6 @@ class TemplateActivity : AppCompatActivity() {
 
         if (durationString.contains(':')) {
             val durationParts = durationString.split(':')
-            if (durationParts.size > 2) {
-                return -1
-            }
-
-            if (durationParts[0].length > 2 || durationParts[1].length > 2) {
-                return -1
-            }
-
             return (durationParts[0].toInt() * HOUR_TO_MINUTE) + (durationParts[1].toInt())
         }
         return durationString.toInt()
@@ -55,14 +78,6 @@ class TemplateActivity : AppCompatActivity() {
     fun saveTemplate(view: View) {
         Log.v(TOKEN, "Save templates")
 
-        val name = findViewById<TextView>(R.id.txtName).text.toString()
-        if (name.isBlank()) {
-            dbg(TOKEN, this.applicationContext, getString(R.string.msgInvalidNameInput))
-
-            findViewById<TextView>(R.id.txtName).requestFocus()
-            return
-        }
-
         val duration = transformDuration()
         if (duration <= 0) {
             dbg(
@@ -70,7 +85,7 @@ class TemplateActivity : AppCompatActivity() {
                 this.applicationContext,
                 getString(
                     R.string.msgInvalidDurationInput,
-                    findViewById<TextView>(R.id.txtDuration).text.toString()
+                    findViewById<TextView>(R.id.txtDuration).text
                 )
             )
 
@@ -78,10 +93,10 @@ class TemplateActivity : AppCompatActivity() {
             return
         }
 
+        val name = findViewById<TextView>(R.id.txtName).text.toString()
         appendReminder(applicationContext, Reminder(name, duration))
 
         makeToast(applicationContext, getString(R.string.msgSaveTemplateSuccess, name))
-
         this.finish()
     }
 }

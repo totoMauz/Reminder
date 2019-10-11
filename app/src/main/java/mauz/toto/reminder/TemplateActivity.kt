@@ -8,7 +8,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import kotlinx.android.synthetic.main.activity_new_template.*
 import mauz.toto.reminder.MaintainTemplatesActivity.Companion.EXTRA_DURATION
+import mauz.toto.reminder.MaintainTemplatesActivity.Companion.EXTRA_POSITION
 import mauz.toto.reminder.MaintainTemplatesActivity.Companion.EXTRA_REMINDER
+import mauz.toto.reminder.MaintainTemplatesActivity.Companion.ITEMS
 
 
 class TemplateActivity : AppCompatActivity() {
@@ -110,7 +112,19 @@ class TemplateActivity : AppCompatActivity() {
         }
 
         val name = findViewById<TextView>(R.id.txtName).text.toString()
-        appendReminder(applicationContext, Reminder(name, duration))
+        val newReminder = Reminder(name, duration)
+
+        var position = -1
+        if(intent != null) {
+            position =  intent.getIntExtra(EXTRA_POSITION, -1)
+        }
+
+        if (position != -1) {
+            ITEMS[position] = newReminder
+            writeReminder(applicationContext, ITEMS)
+        } else {
+            appendReminder(applicationContext, newReminder)
+        }
 
         makeToast(applicationContext, getString(R.string.msgSaveTemplateSuccess, name))
         this.finish()

@@ -24,6 +24,7 @@ class MaintainTemplatesActivity : AppCompatActivity() {
         const val EXTRA_REMINDER = "EXTRA_REMINDER"
         const val EXTRA_TIME = "EXTRA_TIME"
         const val EXTRA_DURATION = "EXTRA_DURATION"
+        const val EXTRA_POSITION = "EXTRA_POSITION"
         val ITEMS: MutableList<Reminder> = ArrayList()
     }
 

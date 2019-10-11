@@ -5,7 +5,9 @@ import android.view.ActionMode
 import android.view.Menu
 import android.view.MenuItem
 import mauz.toto.reminder.MaintainTemplatesActivity.Companion.EXTRA_DURATION
+import mauz.toto.reminder.MaintainTemplatesActivity.Companion.EXTRA_POSITION
 import mauz.toto.reminder.MaintainTemplatesActivity.Companion.EXTRA_REMINDER
+import mauz.toto.reminder.MaintainTemplatesActivity.Companion.ITEMS
 
 class TemplateActionModeCallback(val reminder: Reminder, private val templateActivity: MaintainTemplatesActivity) : ActionMode.Callback {
     override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
@@ -16,11 +18,12 @@ class TemplateActionModeCallback(val reminder: Reminder, private val templateAct
                 true
             }
             R.id.template_edit -> {
-                templateActivity.deleteTemplate(reminder)
+                //templateActivity.deleteTemplate(reminder)
 
                 val intent = Intent(templateActivity.applicationContext, TemplateActivity::class.java)
                 intent.putExtra(EXTRA_REMINDER, reminder.name)
                 intent.putExtra(EXTRA_DURATION, reminder.duration)
+                intent.putExtra(EXTRA_POSITION, ITEMS.indexOf(reminder))
                 templateActivity.startActivityForResult(intent, 1)
                 mode.finish()
                 true

@@ -3,10 +3,10 @@ package mauz.toto.reminder
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
+import kotlinx.android.synthetic.main.activity_new_template.*
 import mauz.toto.reminder.MaintainTemplatesActivity.Companion.EXTRA_DURATION
 import mauz.toto.reminder.MaintainTemplatesActivity.Companion.EXTRA_REMINDER
 
@@ -20,36 +20,52 @@ class TemplateActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_template)
 
-        val btnSave = findViewById<Button>(R.id.btnSave)
-        btnSave.isEnabled = false
         val txtDuration = findViewById<TextView>(R.id.txtDuration)
         val txtName = findViewById<TextView>(R.id.txtName)
 
-        txtName.addTextChangedListener(afterTextChanged = { nameString ->
-            if (nameString != null && nameString.isBlank()) {
-                txtName.error = getString(R.string.msgInvalidNameInput)
-                btnSave.isEnabled = false
-            } else {
-                txtName.error = null
-                btnSave.isEnabled = txtDuration.error == null
-            }
+        txtName.addTextChangedListener(afterTextChanged = {
+            validateName()
+            validateDuration()
         })
 
-        txtDuration.addTextChangedListener(afterTextChanged = { durationString ->
-            if (durationString != null && durationString.contains(':')) {
-                val durationParts = durationString.split(':')
-                if (durationParts.size > 2 || durationParts[0].length > 2 || durationParts[1].length > 2) {
-                    txtDuration.error = getString(R.string.msgInvalidDurationInput, txtDuration.text)
-                    btnSave.isEnabled = false
-                } else {
-                    txtDuration.error = null
-                    btnSave.isEnabled = txtName.error == null
-                }
-            }
+        txtDuration.addTextChangedListener(afterTextChanged = {
+            validateName()
+            validateDuration()
         })
     }
 
+    private fun validateName() {
+        val nameString = txtName.text
+        if (nameString == null || nameString.isBlank()) {
+            txtName.error = getString(R.string.msgInvalidNameInput)
+            btnSave.isEnabled = false
+        } else {
+            txtName.error = null
+            btnSave.isEnabled = txtDuration.error == null
+        }
+    }
+
+    private fun validateDuration() {
+        val durationString = txtDuration.text
+        if (durationString == null || durationString.isBlank()) {
+            txtDuration.error = getString(R.string.msgInvalidDurationInput, durationString)
+            btnSave.isEnabled = false
+            return
+        }
+        if (durationString.contains(':')) {
+            val durationParts = durationString.split(':')
+            if (durationParts.size > 2 || durationParts[0].isBlank() || durationParts[0].length > 2 || durationParts[1].length > 2) {
+                txtDuration.error = getString(R.string.msgInvalidDurationInput, durationString)
+                btnSave.isEnabled = false
+                return
+            }
+        }
+        txtDuration.error = null
+        btnSave.isEnabled = txtName.error == null
+    }
+
     override fun onResume() {
+        btnSave.isEnabled = false
         if (intent != null) {
             val name = intent.getStringExtra(EXTRA_REMINDER)
             if (name != null) {

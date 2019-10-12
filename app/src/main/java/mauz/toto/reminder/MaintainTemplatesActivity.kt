@@ -103,7 +103,7 @@ class MaintainTemplatesActivity : AppCompatActivity() {
             )
 
         val alarmManager = this.getSystemService(ALARM_SERVICE) as AlarmManager
-        alarmManager.set(AlarmManager.RTC, calendar.timeInMillis, alarmIntent)
+        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, alarmIntent)
         INTENTS.add(intent)
     }
 
